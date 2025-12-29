@@ -4,9 +4,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { ArticleEntity } from '../article/article.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -30,6 +32,9 @@ export class UserEntity {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => ArticleEntity, (article) => article.author)
+  articles: ArticleEntity[];
 
   @BeforeInsert()
   @BeforeUpdate()
